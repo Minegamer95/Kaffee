@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -61,7 +62,25 @@ namespace KaffeeApp.ViewModel
       }
     }
 
+    private bool m_IsOrderlistVisible;
+    public bool IsOrderlistVisible
+    {
+      get { return m_IsOrderlistVisible; }
+      set
+      {
+        m_IsOrderlistVisible = value;
+        OnPropertyChanged();
+        OnPropertyChanged(nameof(CoffeeOrders));
+      }
+    }
 
+    public ObservableCollection<Person> CoffeeOrders
+    {
+      get
+      {
+        return new ObservableCollection<Person>(Personen.Where(p => p.IsPresent));
+      }
+    }
     #endregion Properties
 
     #region Konstruktor
@@ -73,6 +92,7 @@ namespace KaffeeApp.ViewModel
       AddPersonCommand = new RelayCommand(AddPerson);
       SaveCommand = new RelayCommand(Save);
       DeleteCommand = new RelayCommand(Delete);
+      ShowOrdersCommand = new RelayCommand(ShowOrders);
 
       LoadCoffee();
       ReadPersons();
@@ -142,15 +162,34 @@ namespace KaffeeApp.ViewModel
       SelectedPerson = new Person();
     }
 
+    public ICommand ShowOrdersCommand { get; internal set; }
+
+    private void ShowOrders()
+    {
+      if (IsOrderlistVisible)
+        IsOrderlistVisible = false;
+      else
+        IsOrderlistVisible = true;
+    }
+
     #endregion Commands
 
     #region Methoden
 
-    public void PersonAdded(Person p_Added)
+    public bool PersonAdded(Person p_Added)
     {
-      AlleKaffees.FirstOrDefault(k => k.Name == p_Added.Bestellung.Name).Anzahl++;
-      AlleKaffees.FirstOrDefault(z => z.Name == "Zucker").Anzahl += p_Added.SugarCount;
-      Personen.FirstOrDefault(p => p == p_Added).IsPresent = true;
+      if (p_Added.Bestellung != null)
+      {
+        AlleKaffees.FirstOrDefault(k => k.Name == p_Added.Bestellung.Name).Anzahl++;
+        AlleKaffees.FirstOrDefault(z => z.Name == "Zucker").Anzahl += p_Added.SugarCount;
+        Personen.FirstOrDefault(p => p == p_Added).IsPresent = true;
+        return true;
+      }
+      else
+      {
+        App.Current.MainPage.DisplayAlert("Keine Sorte gewählt", @"" + p_Added.Name + " hat noch keinen Lieblingskaffee", "OK");
+      }
+      return false;
     }
 
     public void PersonDeleted(Person p_Deleted)

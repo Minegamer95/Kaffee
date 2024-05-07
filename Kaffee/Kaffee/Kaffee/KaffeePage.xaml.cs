@@ -1,5 +1,6 @@
 ﻿using KaffeeApp.Model;
 using KaffeeApp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
@@ -41,10 +42,18 @@ namespace KaffeeApp
         if (this.BindingContext is MainPageViewModel mp)
           mp.PersonDeleted(Previous.Except(Current).ToList().FirstOrDefault());
       }
-      else // An Item was selected
+      else if(e.CurrentSelection.Count() > e.PreviousSelection.Count()) // An Item was selected
       {
         if (this.BindingContext is MainPageViewModel mp)
-          mp.PersonAdded(Current.Except(Previous).ToList().FirstOrDefault());
+        {
+          Person clickedPerson = Current.Except(Previous).ToList().FirstOrDefault();
+          bool delete = mp.PersonAdded(clickedPerson);
+          if (!delete)
+          {
+            ((CollectionView)sender).SelectedItems.Remove(clickedPerson);
+            ((CollectionView)sender).SelectedItems = (IList<object>)e.PreviousSelection;
+          }
+        }
       }
     }
   }

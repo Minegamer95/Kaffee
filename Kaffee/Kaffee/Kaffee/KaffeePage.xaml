@@ -67,8 +67,8 @@
           </DataTemplate>
         </CollectionView.ItemTemplate>
       </CollectionView>
-      <Rectangle HeightRequest="5"/>
-      <CollectionView ItemsSource="{Binding Personen}"  SelectionMode="Multiple" SelectionChanged="CollectionView_SelectionChanged" HeightRequest="100">
+      <Rectangle HeightRequest="1"/>
+      <CollectionView ItemsSource="{Binding Personen}"  SelectionMode="Multiple" SelectionChanged="CollectionView_SelectionChanged" HeightRequest="500">
         <CollectionView.ItemsLayout>
           <GridItemsLayout Orientation="Vertical"
                            Span="4"
@@ -84,6 +84,49 @@
           </DataTemplate>
         </CollectionView.ItemTemplate>
       </CollectionView>
+      <Rectangle HeightRequest="5"/>
+      <Frame HeightRequest="4000" IsVisible="{Binding IsOrderlistVisible}" BackgroundColor="SkyBlue" BorderColor="Black">
+        <StackLayout Orientation="Vertical">
+          <Grid HeightRequest="50">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="2"/>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="2"/>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="2"/>
+              <ColumnDefinition Width="50"/>
+              <ColumnDefinition Width="2"/>
+            </Grid.ColumnDefinitions>
+            <Label Text="Name"   FontAttributes="Bold" Grid.Column="1" TextColor="Black"/>
+            <Label Text="Kaffee" FontAttributes="Bold" Grid.Column="3" TextColor="Black"/>
+            <Label Text="Zucker" FontAttributes="Bold" Grid.Column="5" TextColor="Black"/>
+          </Grid>
+          <ListView ItemsSource="{Binding CoffeeOrders, UpdateSourceEventName=PropertyChanged}" SelectionMode="None">
+            <ListView.ItemTemplate>
+              <DataTemplate>
+                <ViewCell>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="2"/>
+                      <ColumnDefinition Width="*"/>
+                      <ColumnDefinition Width="2"/>
+                      <ColumnDefinition Width="*"/>
+                      <ColumnDefinition Width="2"/>
+                      <ColumnDefinition Width="50"/>
+                      <ColumnDefinition Width="2"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="{Binding Name}"       Grid.Column="1" VerticalOptions="Center" TextColor="Black"/>
+                    <Label Text="{Binding Bestellung}" Grid.Column="3" VerticalOptions="Center" TextColor="Black"/>
+                    <Label Text="{Binding SugarCount}" Grid.Column="5" VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black"/>
+                  </Grid>
+                </ViewCell>
+              </DataTemplate>
+            </ListView.ItemTemplate>
+          </ListView>
+        </StackLayout>
+      </Frame>
+      <Button Text="  Bestelliste anzeigen/ausblenden  " Command="{Binding ShowOrdersCommand}" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="DarkBlue" TextColor="White" CornerRadius="10"/>
+      <Rectangle HeightRequest="5"/>
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>

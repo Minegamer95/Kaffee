@@ -3,12 +3,33 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+    <AssemblyVersion>2.0.2</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Helper\**" />
+    <Compile Remove="Images\**" />
+    <EmbeddedResource Remove="Helper\**" />
+    <EmbeddedResource Remove="Images\**" />
+    <None Remove="Helper\**" />
+    <None Remove="Images\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="KaffeePageDetail.xaml.cs" />
@@ -25,11 +46,6 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2622" />
     <PackageReference Include="Xamarin.Essentials" Version="1.8.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Helper\" />
-    <Folder Include="Images\" />
   </ItemGroup>
 
   <ItemGroup>

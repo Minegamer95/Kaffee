@@ -35,8 +35,6 @@ namespace KaffeeApp.Model
         OnPropertyChanged();
       }
     }
-
-
     private int m_Anzahl;
     public int Anzahl
     {

@@ -19,9 +19,9 @@
       <local:PersonenPage/>
     </ShellContent>
   </FlyoutItem>
-  <!--<FlyoutItem Title="Einstellungen">
-    <ShellContent>
-      --><!--<local:MainPage/>--><!--
-    </ShellContent>
-  </FlyoutItem>-->
+  <!-- <FlyoutItem Title="Einstellungen"> -->
+  <!--   <ShellContent> -->
+  <!--     ~1~<local:MainPage/>@1@ -->
+  <!--   </ShellContent> -->
+  <!-- </FlyoutItem> -->
 </Shell>
